@@ -2,6 +2,7 @@
 import Table from '@/components/TableBody';
 import TableHead from '@/components/TableHead';
 import React, { useState } from 'react'
+import { toast } from'react-toastify';
 
 const HomePage = () => {
   const [todo,setTodo] = useState({
@@ -20,13 +21,19 @@ const HomePage = () => {
       ["description"]: e.target.value,
     });
 
+    const reset=(e)=>setTodo({
+      title:"",
+      description:'',
+    })
     const onSubmitHandler = (e) =>{
       e.preventDefault();
       try {
         console.log(todo);
         //api code
+        toast.success("Todo Created");
+        reset();
       } catch (error) {
-        console.log("error")
+        toast.error("error");
       }
     }
   return (
