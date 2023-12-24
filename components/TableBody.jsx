@@ -3,8 +3,8 @@ import React from 'react'
 const Table = () => {
   return (
     <>
-      <tr class="border-b text-purple-500">
-        <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
+      <tr className="border-b text-purple-500">
+        <th scope="row" className="px-6 py-4 font-medium whitespace-nowrap">
           Apple MacBook Pro 17"
         </th>
         <td className="px-6 py-4">Silver</td>

@@ -1,16 +1,25 @@
 import { NextResponse } from "next/server";
-import {ContactDB} from "@/lib/config/db";
-
-const LoadDB = async () =>{
-    await ContactDB();
-}
+import { ContactDB } from "@/lib/config/db";
+import TodoModel from "@/lib/models/TodoModels";
+const LoadDB = async () => {
+  await ContactDB();
+};
 
 LoadDB();
-export async function GET(request){
-    return NextResponse.json({
-        msg:"Hello I am from the Next server"
-    })
+
+export async function POST(request) {
+  const { title, description } = await request.json();
+
+  await TodoModel.create({
+    title,
+    description,
+  });
+  return NextResponse.json({
+    msg: "Hello Todo created",
+  });
 }
 
-
-// gQTVSRAan9Rdb1aY;
+export async function GET(request) {
+  const todos = await TodoModel.find({});
+  return NextResponse.json({ todos });
+}

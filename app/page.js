@@ -1,19 +1,21 @@
-"use client"
-import Table from '@/components/TableBody';
-import TableHead from '@/components/TableHead';
-import React, { useState } from 'react'
-import { toast } from'react-toastify';
+"use client";
+import Table from "@/components/TableBody";
+import TableHead from "@/components/TableHead";
+import React, { useState } from "react";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 const HomePage = () => {
-  const [todo,setTodo] = useState({
-    title: '',
-    description: '',
-  })
+  const [todo, setTodo] = useState({
+    title: "",
+    description: "",
+  });
 
-  const setTitle=(e)=>setTodo({
-    ...todo,
-    ['title']: e.target.value
-  })
+  const setTitle = (e) =>
+    setTodo({
+      ...todo,
+      ["title"]: e.target.value,
+    });
 
   const setDescription = (e) =>
     setTodo({
@@ -21,21 +23,22 @@ const HomePage = () => {
       ["description"]: e.target.value,
     });
 
-    const reset=(e)=>setTodo({
-      title:"",
-      description:'',
-    })
-    const onSubmitHandler = (e) =>{
-      e.preventDefault();
-      try {
-        console.log(todo);
-        //api code
-        toast.success("Todo Created");
-        reset();
-      } catch (error) {
-        toast.error("error");
-      }
+  const reset = (e) =>
+    setTodo({
+      title: "",
+      description: "",
+    });
+  const onSubmitHandler = async (e) => {
+    e.preventDefault();
+    try {
+      
+      const response = await axios.post(`/api`,todo)
+      toast.success(response.data.msg);
+      reset();
+    } catch (error) {
+      toast.error(error.response.data.message);
     }
+  };
   return (
     <>
       <section className="w-full px-3 py-24 md:w-[70%] mx-auto">
@@ -68,7 +71,7 @@ const HomePage = () => {
         </form>
         <table className="w-full text-sm text-left rtl:text-right text-white">
           <thead className="text-xs uppercase bg-purple-500">
-            <TableHead/>
+            <TableHead />
           </thead>
           <tbody>
             {Array(10)
@@ -81,6 +84,6 @@ const HomePage = () => {
       </section>
     </>
   );
-}
+};
 
-export default HomePage
+export default HomePage;
